@@ -1,66 +1,116 @@
+# Asovalvi Backend - API REST para Sistema de Gestión de Asociación de Viveros
+
+**Asovalvi Backend** es la API REST desarrollada en Laravel que proporciona todos los servicios backend para el sistema de gestión integral de la asociación de viveros. Esta API maneja la lógica de negocio, autenticación, autorización y persistencia de datos para los módulos de reuniones, tareas, cartera y usuarios.
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Características del Backend
 
-## About Laravel
+### 🔐 Autenticación y Autorización
+- **Laravel Sanctum**: Sistema de autenticación basado en tokens para API
+- **Middleware de autorización**: Control granular por roles (Administrador, Secretario, Cartera, Asociado)
+- **Guards personalizados**: Protección de rutas según permisos específicos
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### 📊 Módulos Principales
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+#### 🏢 API de Reuniones
+- **CRUD completo**: Crear, leer, actualizar y eliminar reuniones
+- **Gestión de asistentes**: Endpoints para manejar participantes de reuniones
+- **Orden del día**: API para agregar y categorizar temas de discusión
+- **Generación de actas**: Procesamiento de datos para reportes automáticos
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+#### 📋 API de Tareas
+- **Gestión de compromisos**: Endpoints para crear y gestionar tareas
+- **Estados dinámicos**: Manejo de diferentes estados de tareas
+- **Filtros avanzados**: Búsqueda por múltiples criterios
+- **Vinculación con reuniones**: Relación entre tareas y reuniones origen
 
-## Learning Laravel
+#### 💰 API de Cartera
+- **Obligaciones financieras**: Gestión de compromisos de pago
+- **Control de vencimientos**: Sistema de alertas automáticas
+- **Reportes financieros**: Cálculos y resúmenes de cartera
+- **Historial de pagos**: Trazabilidad completa de transacciones
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+#### 👥 API de Usuarios
+- **Gestión de roles**: Sistema robusto de permisos por roles
+- **Registro y validación**: Endpoints para crear y validar usuarios
+- **Perfiles de usuario**: Información detallada de cada miembro
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 🗄️ Base de Datos
+- **Migraciones estructuradas**: Schema bien definido con relaciones consistentes
+- **Seeders incluidos**: Datos de prueba para desarrollo
+- **Eloquent ORM**: Modelos con relaciones optimizadas
+- **Integridad referencial**: Constraints y validaciones a nivel de BD
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 🛡️ Seguridad y Validación
+- **Request validation**: Validaciones robustas en todas las entradas
+- **Sanitización de datos**: Limpieza automática de inputs
+- **Rate limiting**: Protección contra ataques de fuerza bruta
+- **CORS configurado**: Para integración segura con frontend Angular
 
-## Laravel Sponsors
+### 📡 Endpoints Principales
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```
+Authentication:
+POST /api/login
+POST /api/register
+POST /api/logout
 
-### Premium Partners
+Reuniones:
+GET /api/reuniones
+POST /api/reuniones
+PUT /api/reuniones/{id}
+DELETE /api/reuniones/{id}
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Tareas:
+GET /api/tareas
+POST /api/tareas
+PUT /api/tareas/{id}
+DELETE /api/tareas/{id}
 
-## Contributing
+Cartera:
+GET /api/cartera
+POST /api/cartera
+PUT /api/cartera/{id}
+DELETE /api/cartera/{id}
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Usuarios:
+GET /api/usuarios
+POST /api/usuarios
+PUT /api/usuarios/{id}
+DELETE /api/usuarios/{id}
+```
 
-## Code of Conduct
+## Instalación y Configuración
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+# Clonar repositorio
+git clone <repository-url>
+cd asovalvi
 
-## Security Vulnerabilities
+# Instalar dependencias
+composer install
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# Configurar environment
+cp .env.example .env
+php artisan key:generate
 
-## License
+# Configurar base de datos
+php artisan migrate
+php artisan db:seed
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# Instalar Laravel Sanctum
+php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+
+# Iniciar servidor de desarrollo
+php artisan serve
+```
+
+## Tecnologías Utilizadas
+
+- **Laravel 10+**: Framework PHP moderno y robusto
+- **MySQL/PostgreSQL**: Base de datos relacional
+- **Laravel Sanctum**: Autenticación de API
+- **Eloquent ORM**: Mapeo objeto-relacional
+- **Laravel Validation**: Validación de formularios server-side
+- **Carbon**: Manejo avanzado de fechas y tiempo
