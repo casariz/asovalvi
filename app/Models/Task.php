@@ -10,44 +10,53 @@ class Task extends Model
 {
     use HasFactory;
 
-    protected $table = 'tasks';
-
-    protected $primaryKey = 'task_id';
-
-    public $timestamps = false;
-
     protected $fillable = [
-        'meeting_id',
-        'start_date',
-        'estimated_time',
-        'units',
-        'task_description',
+        'title',
+        'description',
+        'priority',
+        'status',
         'assigned_to',
-        'observations',
         'created_by',
-        'creation_date',
-        'reviewed_by',
-        'review_date',
-        'status'
+        'due_date',
+        'completed_at',
+        'notes',
+        'attachments',
     ];
 
-    public function meeting(): BelongsTo {
-        return $this->belongsTo(Meeting::class, 'meeting_id', 'meeting_id');
+    protected $casts = [
+        'due_date' => 'date',
+        'completed_at' => 'datetime',
+        'attachments' => 'array',
+    ];
+
+    public function assignedTo(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'assigned_to');
     }
 
-    public function created_by(): BelongsTo {
-        return $this->belongsTo(User::class, 'created_by', 'id');
+    public function createdBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function status(): BelongsTo {
-        return $this->belongsTo(State::class, 'status', 'status');
+    public function scopePending($query)
+    {
+        return $query->where('status', 'pending');
     }
 
-    public function assigned_to(): BelongsTo {
-        return $this->belongsTo(User::class, 'assigned_to', 'id');
+    public function scopeCompleted($query)
+    {
+        return $query->where('status', 'completed');
     }
 
-    public function reviewed_by(): BelongsTo {
-        return $this->belongsTo(User::class, 'reviewed_by', 'id');
+    public function scopeOverdue($query)
+    {
+        return $query->where('due_date', '<', now())
+                    ->whereIn('status', ['pending', 'in_progress']);
+    }
+
+    public function scopeByPriority($query, $priority)
+    {
+        return $query->where('priority', $priority);
     }
 }

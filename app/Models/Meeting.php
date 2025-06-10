@@ -5,61 +5,63 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Meeting extends Model
 {
     use HasFactory;
 
-    protected $table = 'meetings';
-
-    protected $primaryKey = 'meeting_id';
-
-    public $timestamps = false;
-
     protected $fillable = [
-        'meeting_date',
-        'start_hour',
-        'called_by',
-        'director',
-        'secretary',
-        'placement',
-        'meeting_description',
-        'empty_field',
-        'topics',
-        'created_by',
-        'creation_date',
-        'status'
+        'title',
+        'description',
+        'scheduled_at',
+        'location',
+        'duration_minutes',
+        'type',
+        'status',
+        'organizer_id',
+        'agenda',
+        'minutes',
+        'attachments',
+        'started_at',
+        'ended_at',
     ];
 
-    public function called_by(): BelongsTo {
-        return $this->belongsTo(User::class, 'called_by', 'id');
+    protected $casts = [
+        'scheduled_at' => 'datetime',
+        'started_at' => 'datetime',
+        'ended_at' => 'datetime',
+        'attachments' => 'array',
+    ];
+
+    public function organizer(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'organizer_id');
     }
 
-    public function director(): BelongsTo {
-        return $this->belongsTo(User::class, 'director', 'id');
+    public function attendees(): HasMany
+    {
+        return $this->hasMany(MeetingAttendee::class);
     }
 
-    public function secretary(): BelongsTo {
-        return $this->belongsTo(User::class, 'secretary', 'id');
+    public function scopeUpcoming($query)
+    {
+        return $query->where('scheduled_at', '>', now())
+                    ->where('status', 'scheduled');
     }
 
-    public function created_by(): BelongsTo {
-        return $this->belongsTo(User::class, 'created_by', 'id');
+    public function scopeCompleted($query)
+    {
+        return $query->where('status', 'completed');
     }
 
-    public function status(): BelongsTo {
-        return $this->belongsTo(State::class, 'status', 'status');
+    public function scopeByType($query, $type)
+    {
+        return $query->where('type', $type);
     }
 
-    public function topics() {
-        return $this->hasMany(MeetingTopic::class, 'meeting_id', 'meeting_id');
-    }
-
-    public function assistants() {
-        return $this->hasMany(MeetingAssistant::class, 'meeting_id', 'meeting_id');
-    }
-
-    public function tasks() {
-        return $this->hasMany(Task::class, 'meeting_id', 'meeting_id');
+    public function getAttendanceCountAttribute()
+    {
+        return $this->attendees()->where('status', 'attended')->count();
     }
 }

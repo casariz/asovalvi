@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>Asociación de Viveros el Rosal</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -38,7 +38,7 @@
                                         href="{{ route('login') }}"
                                         class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
                                     >
-                                        Log in
+                                        Iniciar sesión
                                     </a>
 
                                     @if (Route::has('register'))
@@ -46,7 +46,7 @@
                                             href="{{ route('register') }}"
                                             class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
                                         >
-                                            Register
+                                            Registrarse
                                         </a>
                                     @endif
                                 @endauth
@@ -55,6 +55,35 @@
                     </header>
 
                     <main class="mt-6">
+                        <!-- Document Upload Section -->
+                        <div class="mb-8 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] dark:bg-zinc-900 dark:ring-zinc-800">
+                            <h2 class="text-xl font-semibold text-black dark:text-white mb-4">Gestión de Documentos</h2>
+                            <form action="/documents" method="POST" enctype="multipart/form-data" class="space-y-4">
+                                @csrf
+                                <div>
+                                    <label for="document_number" class="block text-sm font-medium text-black dark:text-white">Número de Documento *</label>
+                                    <input type="text" id="document_number" name="document_number" required 
+                                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#FF2D20] focus:ring-[#FF2D20] dark:bg-zinc-800 dark:border-zinc-700 dark:text-white">
+                                    @error('document_number')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div>
+                                    <label for="document_title" class="block text-sm font-medium text-black dark:text-white">Título del Documento</label>
+                                    <input type="text" id="document_title" name="document_title" 
+                                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#FF2D20] focus:ring-[#FF2D20] dark:bg-zinc-800 dark:border-zinc-700 dark:text-white">
+                                </div>
+                                <div>
+                                    <label for="document_file" class="block text-sm font-medium text-black dark:text-white">Archivo</label>
+                                    <input type="file" id="document_file" name="document_file" accept=".pdf,.doc,.docx,.jpg,.png" 
+                                           class="mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-zinc-800 dark:border-zinc-700 dark:placeholder-gray-400">
+                                </div>
+                                <button type="submit" class="rounded-md bg-[#FF2D20] px-4 py-2 text-white font-semibold hover:bg-[#FF2D20]/90 focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20]">
+                                    Subir Documento
+                                </button>
+                            </form>
+                        </div>
+
                         <div class="grid gap-6 lg:grid-cols-2 lg:gap-8">
                             <a
                                 href="https://laravel.com/docs"
@@ -90,10 +119,10 @@
                                         </div>
 
                                         <div class="pt-3 sm:pt-5 lg:pt-0">
-                                            <h2 class="text-xl font-semibold text-black dark:text-white">Documentation</h2>
+                                            <h2 class="text-xl font-semibold text-black dark:text-white">Documentación</h2>
 
                                             <p class="mt-4 text-sm/relaxed">
-                                                Laravel has wonderful documentation covering every aspect of the framework. Whether you are a newcomer or have prior experience with Laravel, we recommend reading our documentation from beginning to end.
+                                                Sistema de gestión documental para la Asociación de Viveros el Rosal. Aquí puedes subir, organizar y gestionar todos los documentos importantes de la asociación de manera segura y eficiente.
                                             </p>
                                         </div>
                                     </div>
@@ -111,10 +140,10 @@
                                 </div>
 
                                 <div class="pt-3 sm:pt-5">
-                                    <h2 class="text-xl font-semibold text-black dark:text-white">Laracasts</h2>
+                                    <h2 class="text-xl font-semibold text-black dark:text-white">Capacitación</h2>
 
                                     <p class="mt-4 text-sm/relaxed">
-                                        Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript development. Check them out, see for yourself, and massively level up your development skills in the process.
+                                        Accede a recursos de capacitación y tutoriales especializados en el cultivo y cuidado de plantas. Mejora tus técnicas de vivero y mantente actualizado con las mejores prácticas de la industria.
                                     </p>
                                 </div>
 
@@ -130,10 +159,10 @@
                                 </div>
 
                                 <div class="pt-3 sm:pt-5">
-                                    <h2 class="text-xl font-semibold text-black dark:text-white">Laravel News</h2>
+                                    <h2 class="text-xl font-semibold text-black dark:text-white">Noticias del Sector</h2>
 
                                     <p class="mt-4 text-sm/relaxed">
-                                        Laravel News is a community driven portal and newsletter aggregating all of the latest and most important news in the Laravel ecosystem, including new package releases and tutorials.
+                                        Mantente informado con las últimas noticias y tendencias del sector de viveros y jardinería. Descubre nuevas variedades de plantas, técnicas de cultivo y oportunidades de mercado para hacer crecer tu negocio.
                                     </p>
                                 </div>
 
@@ -152,10 +181,10 @@
                                 </div>
 
                                 <div class="pt-3 sm:pt-5">
-                                    <h2 class="text-xl font-semibold text-black dark:text-white">Vibrant Ecosystem</h2>
+                                    <h2 class="text-xl font-semibold text-black dark:text-white">Ecosistema Vivero</h2>
 
                                     <p class="mt-4 text-sm/relaxed">
-                                        Laravel's robust library of first-party tools and libraries, such as <a href="https://forge.laravel.com" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white dark:focus-visible:ring-[#FF2D20]">Forge</a>, <a href="https://vapor.laravel.com" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Vapor</a>, <a href="https://nova.laravel.com" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Nova</a>, <a href="https://envoyer.io" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Envoyer</a>, and <a href="https://herd.laravel.com" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Herd</a> help you take your projects to the next level. Pair them with powerful open source libraries like <a href="https://laravel.com/docs/billing" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Cashier</a>, <a href="https://laravel.com/docs/dusk" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Dusk</a>, <a href="https://laravel.com/docs/broadcasting" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Echo</a>, <a href="https://laravel.com/docs/horizon" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Horizon</a>, <a href="https://laravel.com/docs/sanctum" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Sanctum</a>, <a href="https://laravel.com/docs/telescope" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Telescope</a>, and more.
+                                        Explora nuestra red de herramientas y recursos para viveros. Desde sistemas de gestión de inventario hasta técnicas de propagación, tenemos todo lo que necesitas para hacer prosperar tu vivero y cultivar plantas de calidad excepcional.
                                     </p>
                                 </div>
                             </div>
