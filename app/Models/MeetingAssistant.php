@@ -14,13 +14,24 @@ class MeetingAssistant extends Model
 
     protected $table = 'meeting_assistants';
 
-    protected $primaryKey = 'meeting_id';
+    protected $primaryKey = ['meeting_id', 'user_id'];
+    public $incrementing = false;
 
     protected $fillable = [
+        'meeting_id',
+        'user_id',
         'status'
     ];
 
-    public function user_id(): BelongsTo {
+    public function user(): BelongsTo {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function meeting(): BelongsTo {
+        return $this->belongsTo(Meeting::class, 'meeting_id', 'meeting_id');
+    }
+
+    public function status(): BelongsTo {
+        return $this->belongsTo(State::class, 'status', 'status');
     }
 }

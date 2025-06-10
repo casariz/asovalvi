@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class MeetingTopic extends Model
 {
@@ -23,4 +24,16 @@ class MeetingTopic extends Model
         'creation_date',
         'status'
     ];
+
+    public function meeting(): BelongsTo {
+        return $this->belongsTo(Meeting::class, 'meeting_id', 'meeting_id');
+    }
+
+    public function created_by(): BelongsTo {
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+
+    public function status(): BelongsTo {
+        return $this->belongsTo(State::class, 'status', 'status');
+    }
 }

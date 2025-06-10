@@ -45,4 +45,8 @@ class Obligation extends Model
     public function status(): BelongsTo {
         return $this->belongsTo(State::class, 'status', 'status');
     }
+
+    public function payments() {
+        return $this->hasMany(Payment::class, 'obligation_id', 'obligation_id');
+    }
 }

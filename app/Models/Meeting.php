@@ -51,7 +51,15 @@ class Meeting extends Model
         return $this->belongsTo(State::class, 'status', 'status');
     }
 
-    public function topics(): BelongsTo {
-        return $this->belongsTo(MeetingTopic::class, 'meeting_id', 'meeting_id');
+    public function topics() {
+        return $this->hasMany(MeetingTopic::class, 'meeting_id', 'meeting_id');
+    }
+
+    public function assistants() {
+        return $this->hasMany(MeetingAssistant::class, 'meeting_id', 'meeting_id');
+    }
+
+    public function tasks() {
+        return $this->hasMany(Task::class, 'meeting_id', 'meeting_id');
     }
 }
