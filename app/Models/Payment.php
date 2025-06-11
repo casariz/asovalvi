@@ -16,7 +16,22 @@ class Payment extends Model
 
     public $timestamps = false;
 
+    protected $fillable = [
+        'obligation_id',
+        'date_ini',
+        'date_end',
+        'paid',
+        'observations',
+        'created_by',
+        'creation_date',
+        'status'
+    ];
+
     public function created_by(): BelongsTo {
         return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+
+    public function obligation(): BelongsTo {
+        return $this->belongsTo(Obligation::class, 'obligation_id', 'obligation_id');
     }
 }

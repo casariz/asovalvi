@@ -14,9 +14,12 @@ class MeetingAssistant extends Model
 
     protected $table = 'meeting_assistants';
 
-    protected $primaryKey = 'meeting_id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
+        'meeting_id',
+        'assistant_name',
+        'user_id',
         'status'
     ];
 

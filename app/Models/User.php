@@ -2,31 +2,37 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class User extends Authenticatable
+class User extends Model
 {
-    use HasApiTokens, Notifiable;
-
-    public $timestamps = false;
+    use HasFactory;
 
     protected $fillable = [
-        'first_name',
-        'last_name',
-        'document_number',
-        'user_type',
+        'name',
+        'email',
         'password',
-        'status',
+        'position',
+        'phone',
+        'status'
     ];
 
     protected $hidden = [
         'password',
     ];
 
-    public function status(): BelongsTo {
-        return $this->belongsTo(State::class, 'status', 'status');
+    // Relaciones con tasks
+    public function created_tasks(): HasMany {
+        return $this->hasMany(Task::class, 'created_by', 'id');
+    }
+
+    public function assigned_tasks(): HasMany {
+        return $this->hasMany(Task::class, 'assigned_to', 'id');
+    }
+
+    public function reviewed_tasks(): HasMany {
+        return $this->hasMany(Task::class, 'reviewed_by', 'id');
     }
 }

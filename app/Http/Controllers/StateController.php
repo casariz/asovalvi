@@ -39,14 +39,5 @@ class StateController extends Controller
 
         return response()->json(['status' => $status]);
     }
-
-    public function users()
-    {
-        $status = [
-            'Inactivo',
-            'Activo'
-        ];
-
-        return response()->json(['status' => $status]);
-    }
+}
 }

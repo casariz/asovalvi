@@ -6,7 +6,6 @@ use App\Models\Obligation;
 use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,7 +15,7 @@ class ObligationController extends Controller
         $this->updatePayments();
         $this->updateStatus();
 
-        $obligations = Obligation::with('reviewed_by', 'created_by', 'status')->orderBy('status', 'desc')->get();
+        $obligations = Obligation::orderBy('status', 'desc')->get();
 
         foreach ($obligations as $obligation) {
             $obligation->total_paid = Payment::where('obligation_id', $obligation->obligation_id)->sum('paid');
@@ -43,15 +42,13 @@ class ObligationController extends Controller
         }
 
         try {
-            $user = Auth::user();
-
             $obligation = new Obligation();
             $obligation->obligation_id = $request->obligation_id;
             $obligation->obligation_description = $request->obligation_description;
             $obligation->quantity = $request->quantity;
             $obligation->period = $request->period;
             $obligation->alert_time = $request->alert_time;
-            $obligation->created_by = $user->id;
+            $obligation->created_by = 1; // Sin autenticación
             $obligation->last_payment = $request->last_payment;
             $obligation->expiration_date = $request->expiration_date;
             $obligation->observations = $request->observations;
@@ -61,7 +58,7 @@ class ObligationController extends Controller
 
             $obligation->save();
 
-            $obligation->load('reviewed_by', 'created_by', 'status');
+            $obligation->load('status');
 
             return response()->json(['message' => 'Obligation creado correctamente.', 'obligation' => $obligation], 201);
         } catch (\Exception $e) {
@@ -70,7 +67,7 @@ class ObligationController extends Controller
     }
 
     public function view($obligation_id) {
-        $obligation = Obligation::with('reviewed_by', 'created_by', 'status')->findORfail($obligation_id);
+        $obligation = Obligation::findORfail($obligation_id);
         return response()->json(['obligation' => $obligation]);
     }
 
@@ -134,8 +131,6 @@ class ObligationController extends Controller
         }
 
         try {
-            $user = Auth::user();
-
             $payment = new Payment();
 
             $payment->obligation_id = $request->obligation_id;
@@ -143,7 +138,7 @@ class ObligationController extends Controller
             $payment->date_end = $request->date_end;
             $payment->paid = $request->paid;
             $payment->observations = $request->observations;
-            $payment->created_by = $user->id;
+            $payment->created_by = 1; // Sin autenticación
             $payment->creation_date = Carbon::now();
             $payment->status = 2;
 
@@ -156,7 +151,7 @@ class ObligationController extends Controller
     }
 
     public function listPayments($obligation_id) {
-        $payments = Payment::with('created_by')->where('obligation_id', $obligation_id)->get();
+        $payments = Payment::where('obligation_id', $obligation_id)->get();
         return response()->json(['payments' => $payments]);
     }
 

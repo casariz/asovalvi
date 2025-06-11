@@ -6,11 +6,6 @@
 
 ## Características del Backend
 
-### 🔐 Autenticación y Autorización
-- **Laravel Sanctum**: Sistema de autenticación basado en tokens para API
-- **Middleware de autorización**: Control granular por roles (Administrador, Secretario, Cartera, Asociado)
-- **Guards personalizados**: Protección de rutas según permisos específicos
-
 ### 📊 Módulos Principales
 
 #### 🏢 API de Reuniones
@@ -32,7 +27,7 @@
 - **Historial de pagos**: Trazabilidad completa de transacciones
 
 #### 👥 API de Usuarios
-- **Gestión de roles**: Sistema robusto de permisos por roles
+- **Gestión de roles**: Sistema de permisos por roles
 - **Registro y validación**: Endpoints para crear y validar usuarios
 - **Perfiles de usuario**: Información detallada de cada miembro
 
@@ -45,7 +40,6 @@
 ### 🛡️ Seguridad y Validación
 - **Request validation**: Validaciones robustas en todas las entradas
 - **Sanitización de datos**: Limpieza automática de inputs
-- **Rate limiting**: Protección contra ataques de fuerza bruta
 - **CORS configurado**: Para integración segura con frontend Angular
 
 ### 📡 Endpoints Principales

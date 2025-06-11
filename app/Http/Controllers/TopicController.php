@@ -19,7 +19,6 @@ class TopicController extends Controller
             'meeting_id' => 'required|integer',
             'type' => 'required|string',
             'topic' => 'required|string',
-            'created_by' => 'required|integer',
             'creation_date' => 'nullable|string',
         ]);
 
@@ -32,7 +31,7 @@ class TopicController extends Controller
             $topic->meeting_id = $request->meeting_id;
             $topic->type = $request->type;
             $topic->topic = $request->topic;
-            $topic->created_by = $request->created_by;
+            $topic->created_by = 1; // Sin autenticación
             $topic->creation_date = \Carbon\Carbon::now();
             $topic->status = 2;
 

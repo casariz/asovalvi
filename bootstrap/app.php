@@ -12,7 +12,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        // Sin middleware de autenticación
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
