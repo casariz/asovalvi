@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Meeting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class MeetingController extends Controller
 {
     public function list(Request $request) {
         $perPage = $request->input('per_page', 15);
 
-        $meetings = Meeting::with('called_by', 'director', 'secretary', 'created_by', 'topics', 'status')->orderBy('status', 'asc')->paginate($perPage);
+        $meetings = Meeting::with(['called_by', 'director', 'secretary', 'created_by', 'topics' => function($query) {
+            $query->orderBy('creation_date', 'asc');
+        }, 'status'])->orderBy('status', 'asc')->paginate($perPage);
 
         return response()->json($meetings);
     }
@@ -52,7 +55,9 @@ class MeetingController extends Controller
 
             $meeting->save();
 
-            $meeting->load('called_by', 'director', 'secretary', 'created_by', 'topics', 'status');
+            $meeting->load(['called_by', 'director', 'secretary', 'created_by', 'topics' => function($query) {
+                $query->orderBy('creation_date', 'asc');
+            }, 'status']);
 
             return response()->json(['message' => 'meeting creado correctamente.', 'meeting' => $meeting], 201);
         } catch (\Exception $e) {
@@ -61,7 +66,9 @@ class MeetingController extends Controller
     }
 
     public function view($meeting_id) {
-        $meeting = Meeting::with('called_by', 'director', 'secretary', 'created_by', 'topics', 'status')->findORfail($meeting_id);
+        $meeting = Meeting::with(['called_by', 'director', 'secretary', 'created_by', 'topics' => function($query) {
+            $query->orderBy('creation_date', 'asc');
+        }, 'status'])->findOrFail($meeting_id);
         return response()->json(['meeting' => $meeting]);
     }
 
@@ -83,7 +90,7 @@ class MeetingController extends Controller
         }
 
         try {
-            $meeting = Meeting::findORfail($meeting_id);
+            $meeting = Meeting::findOrFail($meeting_id);
             $meeting->update([
                 'meeting_date' => $request->meeting_date,
                 'start_hour' => $request->start_hour,
@@ -102,7 +109,7 @@ class MeetingController extends Controller
     }
 
     public function complete($meeting_id) {
-        $meeting = Meeting::findORfail($meeting_id);
+        $meeting = Meeting::findOrFail($meeting_id);
         $meeting->update([
             'status' => 4
         ]);

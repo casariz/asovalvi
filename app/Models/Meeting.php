@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Meeting extends Model
 {
@@ -25,7 +26,6 @@ class Meeting extends Model
         'placement',
         'meeting_description',
         'empty_field',
-        'topics',
         'created_by',
         'creation_date',
         'status'
@@ -51,7 +51,7 @@ class Meeting extends Model
         return $this->belongsTo(State::class, 'status', 'status');
     }
 
-    public function topics(): BelongsTo {
-        return $this->belongsTo(MeetingTopic::class, 'meeting_id', 'meeting_id');
+    public function topics(): HasMany {
+        return $this->hasMany(MeetingTopic::class, 'meeting_id', 'meeting_id');
     }
 }
