@@ -52,7 +52,7 @@ class TaskSeeder extends Seeder
                 'observations' => 'Prioridad alta - inventario mensual',
                 'created_by' => $users->first()->id,
                 'creation_date' => now(),
-                'state_id' => 2 // Asignada
+                'status' => 2 // Asignada
             ]);
 
             Task::create([
@@ -65,7 +65,7 @@ class TaskSeeder extends Seeder
                 'observations' => 'Incluir comparativo con trimestre anterior',
                 'created_by' => $users->first()->id,
                 'creation_date' => now(),
-                'state_id' => 1 // Pendiente
+                'status' => 1 // Pendiente
             ]);
 
             Task::create([
@@ -80,7 +80,7 @@ class TaskSeeder extends Seeder
                 'creation_date' => now(),
                 'reviewed_by' => $users->random()->id,
                 'review_date' => now()->addDays(5),
-                'state_id' => 3 // Completada
+                'status' => 3 // Completada
             ]);
         }
     }

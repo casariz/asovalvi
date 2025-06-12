@@ -24,7 +24,7 @@ return new class extends Migration
             $table->timestamp('creation_date')->nullable();
             $table->unsignedBigInteger('reviewed_by')->nullable();
             $table->timestamp('review_date')->nullable();
-            $table->unsignedBigInteger('state_id')->default(1); // Asumo que el 1 es el estado inicial "Pendiente"
+            $table->unsignedBigInteger('status')->default(1); // Asumo que el 1 es el estado inicial "Pendiente"
 
             // Foreign key constraints
             $table->foreign('meeting_id')->references('meeting_id')->on('meetings')->onDelete('cascade');
@@ -33,7 +33,7 @@ return new class extends Migration
             $table->foreign('reviewed_by')->references('id')->on('users')->onDelete('set null');
 
             // CORREGIDO: Apuntar a status_descriptions y a la columna status
-            $table->foreign('state_id')
+            $table->foreign('status')
                 ->references('status')
                 ->on('status_descriptions')
                 ->onDelete('restrict');

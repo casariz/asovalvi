@@ -37,7 +37,7 @@ class TaskFactory extends Factory
             'creation_date' => now(),
             'reviewed_by' => fake()->optional()->randomElement($users),
             'review_date' => fake()->optional()->dateTimeBetween('now', '+2 weeks'),
-            'state_id' => fake()->randomElement([1, 2, 3, 4]) // Pendiente, Asignada, Completada, Rechazada
+            'status' => fake()->randomElement([1, 2, 3, 4]) // Pendiente, Asignada, Completada, Rechazada
         ];
     }
 
@@ -48,7 +48,7 @@ class TaskFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'assigned_to' => null,
-            'state_id' => 1 // Pendiente
+            'status' => 1 // Pendiente
         ]);
     }
 
@@ -61,7 +61,7 @@ class TaskFactory extends Factory
 
         return $this->state(fn (array $attributes) => [
             'assigned_to' => fake()->randomElement($users),
-            'state_id' => 2 // Asignada
+            'status' => 2 // Asignada
         ]);
     }
 
@@ -76,7 +76,7 @@ class TaskFactory extends Factory
             'assigned_to' => fake()->randomElement($users),
             'reviewed_by' => fake()->randomElement($users),
             'review_date' => now()->addDays(fake()->numberBetween(1, 7)),
-            'state_id' => 3 // Completada
+            'status' => 3 // Completada
         ]);
     }
 
@@ -91,7 +91,7 @@ class TaskFactory extends Factory
             'assigned_to' => fake()->randomElement($users),
             'reviewed_by' => fake()->randomElement($users),
             'review_date' => now()->addDays(fake()->numberBetween(1, 7)),
-            'state_id' => 4 // Rechazada
+            'status' => 4 // Rechazada
         ]);
     }
 }

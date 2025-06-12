@@ -13,7 +13,8 @@ class UserSeeder extends Seeder
     {
         // Crear usuarios específicos del sistema
         User::create([
-            'name' => 'Administrador Sistema',
+            'first_name' => 'Administrador',
+            'last_name' => 'Sistema',
             'email' => 'admin@asovalvi.com',
             'password' => Hash::make('password'),
             'position' => 'Administrador',
@@ -22,7 +23,8 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'Gerente General',
+            'first_name' => 'Gerente',
+            'last_name' => 'General',
             'email' => 'gerente@asovalvi.com',
             'password' => Hash::make('password'),
             'position' => 'Gerente',
@@ -31,7 +33,8 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'Coordinador Operaciones',
+            'first_name' => 'Coordinador',
+            'last_name' => 'Operaciones',
             'email' => 'coordinador@asovalvi.com',
             'password' => Hash::make('password'),
             'position' => 'Coordinador',
@@ -40,7 +43,8 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'Supervisor Campo',
+            'first_name' => 'Supervisor',
+            'last_name' => 'Campo',
             'email' => 'supervisor@asovalvi.com',
             'password' => Hash::make('password'),
             'position' => 'Supervisor',
