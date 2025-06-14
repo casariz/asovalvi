@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\User;
 use App\Models\Meeting;
+use App\Models\State;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,6 +16,7 @@ class TaskFactory extends Factory
     {
         $users = User::pluck('id')->toArray();
         $meetings = Meeting::pluck('meeting_id')->toArray();
+        $statuses = State::pluck('status')->toArray();
 
         return [
             'meeting_id' => fake()->randomElement([null, ...$meetings]),
@@ -37,7 +39,7 @@ class TaskFactory extends Factory
             'creation_date' => now(),
             'reviewed_by' => fake()->optional()->randomElement($users),
             'review_date' => fake()->optional()->dateTimeBetween('now', '+2 weeks'),
-            'status' => fake()->randomElement([1, 2, 3, 4]) // Pendiente, Asignada, Completada, Rechazada
+            'status' => fake()->randomElement($statuses)
         ];
     }
 

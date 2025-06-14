@@ -24,7 +24,7 @@ return new class extends Migration
             $table->timestamp('creation_date')->nullable();
             $table->unsignedBigInteger('reviewed_by')->nullable();
             $table->timestamp('review_date')->nullable();
-            $table->unsignedBigInteger('status')->default(1); // Asumo que el 1 es el estado inicial "Pendiente"
+            $table->unsignedBigInteger('status')->default(1); // Pendiente
 
             // Foreign key constraints
             $table->foreign('meeting_id')->references('meeting_id')->on('meetings')->onDelete('cascade');

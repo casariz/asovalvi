@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Task;
 use App\Models\User;
 use App\Models\Meeting;
+use App\Models\State;
 use Illuminate\Database\Seeder;
 
 class TaskSeeder extends Seeder
