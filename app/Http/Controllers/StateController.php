@@ -40,4 +40,3 @@ class StateController extends Controller
         return response()->json(['status' => $status]);
     }
 }
-}
